@@ -32,8 +32,9 @@ public class Aritmetica {
         return (numerador % denominador);
     }
 
-    public int potencia() {
-        return 0;
+    public double potencia(double base, double exponente) {
+        double potencia = Math.pow(base, exponente);
+        return potencia;
     }
 
     public double raiz(double primerNumero) {

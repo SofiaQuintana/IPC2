@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author alfonso
+ * @author alfonso && zofia
  */
 public class Apariencia extends javax.swing.JFrame {
 
@@ -392,7 +392,7 @@ public class Apariencia extends javax.swing.JFrame {
         operaciones.setBackground(new java.awt.Color(204, 204, 204));
 
         jButton15.setBackground(new java.awt.Color(0, 0, 0));
-        jButton15.setFont(new java.awt.Font("DejaVu Sans", 0, 15)); // NOI18N
+        jButton15.setFont(new java.awt.Font("DejaVu Sans", 1, 15)); // NOI18N
         jButton15.setForeground(new java.awt.Color(255, 255, 255));
         jButton15.setText("Potencia");
         jButton15.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -403,7 +403,7 @@ public class Apariencia extends javax.swing.JFrame {
         });
 
         jButton16.setBackground(new java.awt.Color(0, 0, 0));
-        jButton16.setFont(new java.awt.Font("DejaVu Sans", 0, 15)); // NOI18N
+        jButton16.setFont(new java.awt.Font("DejaVu Sans", 1, 15)); // NOI18N
         jButton16.setForeground(new java.awt.Color(255, 255, 255));
         jButton16.setText("Raiz");
         jButton16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -414,7 +414,7 @@ public class Apariencia extends javax.swing.JFrame {
         });
 
         jButton17.setBackground(new java.awt.Color(0, 0, 0));
-        jButton17.setFont(new java.awt.Font("DejaVu Sans", 0, 15)); // NOI18N
+        jButton17.setFont(new java.awt.Font("DejaVu Sans", 1, 15)); // NOI18N
         jButton17.setForeground(new java.awt.Color(255, 255, 255));
         jButton17.setText("Residuo");
         jButton17.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));

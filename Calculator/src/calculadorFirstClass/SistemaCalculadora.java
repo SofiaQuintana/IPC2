@@ -34,7 +34,7 @@ public class SistemaCalculadora {
                 case "%":
                     return "" + aritmetica.residuo(Double.parseDouble(valor1), Double.parseDouble(valor2));
                 case "^":
-                    break;
+                    return "" + aritmetica.potencia(Double.parseDouble(valor1), Double.parseDouble(valor2));
                 case "#":
                     return "" + aritmetica.raiz(Double.parseDouble(valor1));
             }
