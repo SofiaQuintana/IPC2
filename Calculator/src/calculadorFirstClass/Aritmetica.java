@@ -8,7 +8,7 @@ package calculadorFirstClass;
 
 /**
  *
- * @author alfonso
+ * @author alfonso && zofia
  */
 public class Aritmetica {
 
@@ -28,7 +28,7 @@ public class Aritmetica {
         return dividendo / divisor;
     }
 
-    public double residuo(double numerador, double denominador) {
+    public int residuo(int numerador, int denominador) {
         return (numerador % denominador);
     }
 

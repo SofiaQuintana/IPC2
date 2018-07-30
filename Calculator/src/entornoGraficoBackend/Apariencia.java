@@ -10,27 +10,27 @@ import javax.swing.JOptionPane;
  * @author alfonso && zofia
  */
 public class Apariencia extends javax.swing.JFrame {
-
-    String escritura = "";
-    String alterna = "";
-    String numero1 = "";
-    String numero2 = "";
-    String resultado = "";
-    String operacion = "";
-    SistemaCalculadora sistemaCalculadora = new SistemaCalculadora();
+    public String escritura = "";
+    public String alterna = "";
+    public String numero1 = "";
+    public String numero2 = "";
+    public String resultado = "";
+    public String operacion = "";
+    SistemaCalculadora calculatorOperations = new SistemaCalculadora();
     int conteo = 0;
     boolean llave = true;
 
     /**
-     * Creates new form apariencia
+     * Creates new form Appearance
      */
     public Apariencia() {
         initComponents();
         resizeIcon();
+        pantalla.setEnabled(false); //Modificamos la opcion de habilitacion para que el usuario no pueda ingresar datos a traves del teclado.
+        discreteSignsButtons(false);
     }
 
-    public void valor(String entrada) {
-        operacion = entrada;
+    public void valorDeOperacion(String entrada) {
         numero2 = pantalla.getText();
         if (!resultado.equals("")) {
             pantalla.setText("");
@@ -38,9 +38,12 @@ public class Apariencia extends javax.swing.JFrame {
         if (!pantalla.getText().equalsIgnoreCase("") && numero1.equals("") && conteo == 0) {
             numero1 = pantalla.getText();
             pantalla.setText("");
+            operacion = entrada;
         }
         if (conteo >= 1) {
-            resultado = sistemaCalculadora.operar(operacion, numero1, numero2);
+            try {
+            resultado = calculatorOperations.operar(operacion, numero1, numero2);
+            operacion = entrada;
             System.out.println("resultado acarreo " + resultado);
             System.out.println("numero 1: " + numero1);
             System.out.println("numero 2: " + numero2);
@@ -50,6 +53,10 @@ public class Apariencia extends javax.swing.JFrame {
             System.out.println("numero 2: " + numero2);
             System.out.println("");
             pantalla.setText("");
+            } catch(Exception ex) {
+                clearData();
+                JOptionPane.showMessageDialog(this, "Solo se reciben numeros enteros", "Error", JOptionPane.ERROR_MESSAGE);              
+            }
         }
         conteo++;
     }
@@ -72,8 +79,7 @@ public class Apariencia extends javax.swing.JFrame {
         resultButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         puntoButton = new javax.swing.JButton();
-        deleteOneButton = new javax.swing.JButton();
-        jButton18 = new javax.swing.JButton();
+        clearButton = new javax.swing.JButton();
         additionButton = new javax.swing.JButton();
         subtractionButton = new javax.swing.JButton();
         multiplicationButton = new javax.swing.JButton();
@@ -82,10 +88,15 @@ public class Apariencia extends javax.swing.JFrame {
         jButton15 = new javax.swing.JButton();
         jButton16 = new javax.swing.JButton();
         jButton17 = new javax.swing.JButton();
+        permutationButton = new javax.swing.JButton();
+        factorialButton = new javax.swing.JButton();
+        combinationButton = new javax.swing.JButton();
         pantalla = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        arithmeticMenu = new javax.swing.JMenuItem();
+        discreteCalcuMenu = new javax.swing.JMenuItem();
+        conversionMenu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -232,26 +243,15 @@ public class Apariencia extends javax.swing.JFrame {
             }
         });
 
-        deleteOneButton.setBackground(new java.awt.Color(153, 153, 153));
-        deleteOneButton.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
-        deleteOneButton.setForeground(new java.awt.Color(255, 255, 255));
-        deleteOneButton.setText("C");
-        deleteOneButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
-        deleteOneButton.setPreferredSize(new java.awt.Dimension(47, 48));
-        deleteOneButton.addActionListener(new java.awt.event.ActionListener() {
+        clearButton.setBackground(new java.awt.Color(153, 153, 153));
+        clearButton.setFont(new java.awt.Font("DejaVu Sans", 1, 18)); // NOI18N
+        clearButton.setForeground(new java.awt.Color(255, 255, 255));
+        clearButton.setText("C");
+        clearButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
+        clearButton.setPreferredSize(new java.awt.Dimension(47, 48));
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteOneButtonActionPerformed(evt);
-            }
-        });
-
-        jButton18.setBackground(new java.awt.Color(0, 0, 0));
-        jButton18.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
-        jButton18.setForeground(new java.awt.Color(255, 255, 255));
-        jButton18.setText("+/-");
-        jButton18.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jButton18.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton18ActionPerformed(evt);
+                clearButtonActionPerformed(evt);
             }
         });
 
@@ -334,9 +334,7 @@ public class Apariencia extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(additionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelNumerosLayout.createSequentialGroup()
-                                .addGroup(panelNumerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton18, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                                    .addComponent(deleteOneButton, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
+                                .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(panelNumerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(subtractionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -349,7 +347,7 @@ public class Apariencia extends javax.swing.JFrame {
                         .addComponent(resultButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(divisionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelNumerosLayout.setVerticalGroup(
             panelNumerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -367,19 +365,16 @@ public class Apariencia extends javax.swing.JFrame {
                     .addComponent(number5Button, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(number6Button, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(number4Button, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteOneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(subtractionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelNumerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelNumerosLayout.createSequentialGroup()
-                        .addGroup(panelNumerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(number8Button, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(number9Button, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(number7Button, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(panelNumerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelNumerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(number8Button, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(number9Button, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(number7Button, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(multiplicationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelNumerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(resultButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelNumerosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -424,6 +419,39 @@ public class Apariencia extends javax.swing.JFrame {
             }
         });
 
+        permutationButton.setBackground(new java.awt.Color(102, 102, 102));
+        permutationButton.setFont(new java.awt.Font("DejaVu Sans", 1, 14)); // NOI18N
+        permutationButton.setForeground(new java.awt.Color(255, 255, 255));
+        permutationButton.setText("P");
+        permutationButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
+        permutationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                permutationButtonActionPerformed(evt);
+            }
+        });
+
+        factorialButton.setBackground(new java.awt.Color(102, 102, 102));
+        factorialButton.setFont(new java.awt.Font("DejaVu Sans", 1, 14)); // NOI18N
+        factorialButton.setForeground(new java.awt.Color(255, 255, 255));
+        factorialButton.setText("!");
+        factorialButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
+        factorialButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                factorialButtonActionPerformed(evt);
+            }
+        });
+
+        combinationButton.setBackground(new java.awt.Color(102, 102, 102));
+        combinationButton.setFont(new java.awt.Font("DejaVu Sans", 1, 14)); // NOI18N
+        combinationButton.setForeground(new java.awt.Color(255, 255, 255));
+        combinationButton.setText("C");
+        combinationButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 102, 102), 1, true));
+        combinationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                combinationButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout operacionesLayout = new javax.swing.GroupLayout(operaciones);
         operaciones.setLayout(operacionesLayout);
         operacionesLayout.setHorizontalGroup(
@@ -432,12 +460,18 @@ public class Apariencia extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(operacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(operacionesLayout.createSequentialGroup()
-                        .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
-                        .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButton16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(permutationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(combinationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(factorialButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(operacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jButton16, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(operacionesLayout.createSequentialGroup()
+                            .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         operacionesLayout.setVerticalGroup(
             operacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -448,20 +482,41 @@ public class Apariencia extends javax.swing.JFrame {
                     .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(operacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(permutationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(combinationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(factorialButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pantalla.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
 
-        jMenu1.setText("Inicio");
+        jMenu1.setText("Menu");
 
-        jMenuItem1.setText("conversiones");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        arithmeticMenu.setText("Calculos Aritmeticos");
+        arithmeticMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                arithmeticMenuActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(arithmeticMenu);
+
+        discreteCalcuMenu.setText("Calculos Discretos");
+        discreteCalcuMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                discreteCalcuMenuActionPerformed(evt);
+            }
+        });
+        jMenu1.add(discreteCalcuMenu);
+
+        conversionMenu.setText("Conversiones");
+        conversionMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                conversionMenuActionPerformed(evt);
+            }
+        });
+        jMenu1.add(conversionMenu);
 
         jMenuBar1.add(jMenu1);
 
@@ -474,12 +529,12 @@ public class Apariencia extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pantalla)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panelNumeros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(operaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(operaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pantalla, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -487,9 +542,9 @@ public class Apariencia extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(pantalla, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelNumeros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(operaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panelNumeros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(operaciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -499,22 +554,32 @@ public class Apariencia extends javax.swing.JFrame {
     private void resultButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resultButtonActionPerformed
 
         if (!pantalla.getText().equalsIgnoreCase("")) {
+            try {
             numero2 = pantalla.getText();
             pantalla.setText("");
-            resultado = sistemaCalculadora.operar(operacion, numero1, numero2);
+            resultado = calculatorOperations.operar(operacion, numero1, numero2);
             pantalla.setText(resultado);
             numero2 = "";
             numero1 = resultado;
             conteo = 0;
+            } catch(Exception ex) {
+                JOptionPane.showMessageDialog(this, "Solo se reciben numeros enteros", "Error", JOptionPane.ERROR_MESSAGE);
+                clearData();
+            }
         } else {
+            try {
             numero2 = "0";
             pantalla.setText("");
-            resultado = sistemaCalculadora.operar(operacion, numero1, numero2);
+            resultado = calculatorOperations.operar(operacion, numero1, numero2);
             pantalla.setText(resultado);
             numero2 = "";
             operacion = "";
             numero1 = resultado;
             conteo = 0;
+            } catch(Exception ex) {
+                JOptionPane.showMessageDialog(this, "Solo se reciben numeros enteros" , "Error", JOptionPane.ERROR_MESSAGE);
+                clearData();
+            }
         }
 
     }//GEN-LAST:event_resultButtonActionPerformed
@@ -560,50 +625,45 @@ public class Apariencia extends javax.swing.JFrame {
     }//GEN-LAST:event_number0ButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        try {
-            escritura = escritura.substring(0, escritura.length() - 1); // reviso toda la cadena menos el ultimo ais borro digito por digito
-            pantalla.setText(escritura);
+         try {
+            // Reviso toda la cadena menos el ultimo asi borro digito por digito.
+            pantalla.setText(pantalla.getText().substring(0, pantalla.getText().length() - 1));
         } catch (Exception e) {
-            escritura = "";
-            JOptionPane.showMessageDialog(this, "se han elimindo todos los numeros ya no quedan mas ", "ATENCION", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Se han eliminado todos los numeros, ya no quedan mas.", "ATENCION", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void additionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_additionButtonActionPerformed
-        valor("+");
+        valorDeOperacion("+");
     }//GEN-LAST:event_additionButtonActionPerformed
 
     private void subtractionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subtractionButtonActionPerformed
-        valor("-");
+        valorDeOperacion("-");
     }//GEN-LAST:event_subtractionButtonActionPerformed
 
     private void multiplicationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_multiplicationButtonActionPerformed
-        valor("*");
+        valorDeOperacion("*");
     }//GEN-LAST:event_multiplicationButtonActionPerformed
 
     private void divisionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divisionButtonActionPerformed
-         valor("/");
+         valorDeOperacion("/");
     }//GEN-LAST:event_divisionButtonActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-         valor("^");
+         valorDeOperacion("^");
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
-        valor("%");
+        valorDeOperacion("%");
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        valor("#");
+        valorDeOperacion("#");
     }//GEN-LAST:event_jButton16ActionPerformed
 
-    private void deleteOneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteOneButtonActionPerformed
-        pantalla.setText("");
-        conteo = 0;
-        numero2 = "";
-        numero1 = "";
-        resultado = "";
-    }//GEN-LAST:event_deleteOneButtonActionPerformed
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        clearData();
+    }//GEN-LAST:event_clearButtonActionPerformed
 
     private void puntoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_puntoButtonActionPerformed
         if (pantalla.getText().length() <= 0) {
@@ -615,15 +675,35 @@ public class Apariencia extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_puntoButtonActionPerformed
 
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton18ActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-       conversiones conversiones = new conversiones();
+    private void conversionMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conversionMenuActionPerformed
+       ConversionsFrame conversiones = new ConversionsFrame();
        conversiones.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_conversionMenuActionPerformed
 
+    private void discreteCalcuMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_discreteCalcuMenuActionPerformed
+        // TODO add your handling code here:
+        discreteSignsButtons(true);
+    }//GEN-LAST:event_discreteCalcuMenuActionPerformed
+
+    private void permutationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_permutationButtonActionPerformed
+        valorDeOperacion("P");
+    }//GEN-LAST:event_permutationButtonActionPerformed
+
+    private void factorialButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_factorialButtonActionPerformed
+        valorDeOperacion("!");
+    }//GEN-LAST:event_factorialButtonActionPerformed
+
+    private void combinationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combinationButtonActionPerformed
+        valorDeOperacion("C");
+    }//GEN-LAST:event_combinationButtonActionPerformed
+
+    private void arithmeticMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arithmeticMenuActionPerformed
+        // TODO add your handling code here:
+        discreteSignsButtons(false);
+    }//GEN-LAST:event_arithmeticMenuActionPerformed
+
+    /* Metodo encargado de redimensionar el icono "Eliminar" al 
+    ** size del boton en el cual se encontrara insertado. */
     public void resizeIcon() {
         ImageIcon icon = new ImageIcon(getClass().getResource("/icons/icon.png"));
         Image image = icon.getImage();
@@ -631,19 +711,38 @@ public class Apariencia extends javax.swing.JFrame {
         ImageIcon newIcon = new ImageIcon(newImage);
         deleteButton.setIcon(newIcon);
     }
+    
+    /* Metodo encargado de limpiar los datos que se encuentren en pantalla 
+    ** y/o en las variables principales, para poder realizar una nueva operacion sin los datos
+    ** que se encuentren en la misma. */
+    public void clearData() {
+        pantalla.setText("");
+        conteo = 0;
+        numero2 = "";
+        numero1 = "";
+        resultado = "";
+    }
 
+    public void discreteSignsButtons(boolean visibility) {
+        permutationButton.setVisible(visibility);
+        combinationButton.setVisible(visibility);
+        factorialButton.setVisible(visibility);      
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton additionButton;
+    private javax.swing.JMenuItem arithmeticMenu;
+    private javax.swing.JButton clearButton;
+    private javax.swing.JButton combinationButton;
+    private javax.swing.JMenuItem conversionMenu;
     private javax.swing.JButton deleteButton;
-    private javax.swing.JButton deleteOneButton;
+    private javax.swing.JMenuItem discreteCalcuMenu;
     private javax.swing.JButton divisionButton;
+    private javax.swing.JButton factorialButton;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JButton multiplicationButton;
     private javax.swing.JButton number0Button;
     private javax.swing.JButton number1Button;
@@ -658,6 +757,7 @@ public class Apariencia extends javax.swing.JFrame {
     private javax.swing.JPanel operaciones;
     private javax.swing.JPanel panelNumeros;
     private javax.swing.JTextField pantalla;
+    private javax.swing.JButton permutationButton;
     private javax.swing.JButton puntoButton;
     private javax.swing.JButton resultButton;
     private javax.swing.JButton subtractionButton;

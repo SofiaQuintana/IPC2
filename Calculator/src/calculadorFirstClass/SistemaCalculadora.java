@@ -10,16 +10,13 @@ package calculadorFirstClass;
  * @author alfonso && zofia
  */
 public class SistemaCalculadora {
-
+    CalculosDiscretos discreteCalc = new CalculosDiscretos();
     Aritmetica aritmetica = new Aritmetica();
 
-    public String operar(String signo, String valor1, String valor2) {
-        int conteo;
-        double numero;
+    public String operar(String signo, String valor1, String valor2) throws Exception{
         System.out.println(valor1);
         System.out.println(valor2);
 
-        try {
             System.out.println(signo + " " + valor1 + " " + valor2);
             switch (signo) {
                 case "+":
@@ -32,15 +29,18 @@ public class SistemaCalculadora {
                 case "/":
                     return "" + aritmetica.division(Double.parseDouble(valor1), Double.parseDouble(valor2));
                 case "%":
-                    return "" + aritmetica.residuo(Double.parseDouble(valor1), Double.parseDouble(valor2));
+                    return "" + aritmetica.residuo(Integer.parseInt(valor1), Integer.parseInt(valor2));
                 case "^":
                     return "" + aritmetica.potencia(Double.parseDouble(valor1), Double.parseDouble(valor2));
                 case "#":
                     return "" + aritmetica.raiz(Double.parseDouble(valor1));
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+                case "C":
+                    return "" + discreteCalc.combination(Integer.parseInt(valor1), Integer.parseInt(valor2));
+                case "P":
+                    return "" + discreteCalc.permutacion(Integer.parseInt(valor1), Integer.parseInt(valor2));
+                case "!":
+                    return "" + discreteCalc.factorial(Integer.parseInt(valor1));
+            }     
         return "";
     }
 
